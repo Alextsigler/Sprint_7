@@ -6,11 +6,6 @@ login = generate_random_string(10)
 password = generate_random_string(10)
 firstname = generate_random_string(10)
 
-login_couriers = {
-    "login": login,
-    "password": password
-}
-
 uncurrent_login = {
     "login": f"{login}1",
     "password": password
@@ -20,17 +15,6 @@ not_field_login = {
     "password": password
 }
 
-create_couriers = {
-    "login": login,
-    "password": password,
-    "firstName": firstname
-}
-
-data_create_couriers = {
-    "login": login,
-    "password": password,
-    "firstName": firstname
-}
 
 data_create_null_field = [
     {

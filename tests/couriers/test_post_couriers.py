@@ -8,11 +8,11 @@ from methods.courier_methods import CourierMethods
 @allure.feature('Проверки на создание курьера')
 class TestPostCouriers:
 
+
     # Курьера можно создать
     @allure.title('Проверка, что курьера можно создать')
     @allure.description('Создаем курьера с корректными данными')
-    def test_post_couriers(self, generate_data_create_couriers):
-        couriers = CourierMethods()
+    def test_post_couriers(self, couriers, generate_data_create_couriers):
         status_code, response_text = couriers.post_couriers(
             urls.BASE_URL, urls.CREATE_COURIERS_URL, generate_data_create_couriers
         )
@@ -23,11 +23,10 @@ class TestPostCouriers:
     # Нельзя создать двух одинаковых курьеров
     @allure.title('Проверка, что нельзя создать двух одинаковых курьеров')
     @allure.description('Создаем двух курьеров с одинаковыми данными')
-    def test_create_dublicate_two_couriers(self):
-        couriers = CourierMethods()
-        couriers.post_couriers(urls.BASE_URL, urls.CREATE_COURIERS_URL, data.data_create_couriers)
+    def test_create_dublicate_two_couriers(self, couriers, generate_data_create_couriers):
+        couriers.post_couriers(urls.BASE_URL, urls.CREATE_COURIERS_URL, generate_data_create_couriers)
         status_code, response_text = couriers.post_couriers(
-            urls.BASE_URL, urls.CREATE_COURIERS_URL, data.data_create_couriers
+            urls.BASE_URL, urls.CREATE_COURIERS_URL, generate_data_create_couriers
         )
         assert status_code == 409 and response_text, (
             f"status_code = {status_code}, response_text = {response_text}"
@@ -54,8 +53,7 @@ class TestPostCouriers:
     # Запрос возвращает правильный код ответа
     @allure.title('Проверка, что запрос возвращает правильный код ответа')
     @allure.description('Создаем курьера с корректными данными')
-    def test_post_couriers_return_current_status_code(self, generate_data_create_couriers):
-        couriers = CourierMethods()
+    def test_post_couriers_return_current_status_code(self, couriers, generate_data_create_couriers):
         status_code, response_text = couriers.post_couriers(
             urls.BASE_URL, urls.CREATE_COURIERS_URL, generate_data_create_couriers
         )
@@ -66,8 +64,7 @@ class TestPostCouriers:
     # Успешный запрос возвращает {"ok": true};
     @allure.title('Проверка, что запрос возвращает правильное тело ответа')
     @allure.description('Создаем курьера с корректными данными')
-    def test_post_couriers_return_current_response_text(self, generate_data_create_couriers):
-        couriers = CourierMethods()
+    def test_post_couriers_return_current_response_text(self, couriers, generate_data_create_couriers):
         status_code, response_text = couriers.post_couriers(
             urls.BASE_URL, urls.CREATE_COURIERS_URL, generate_data_create_couriers
         )
@@ -97,11 +94,10 @@ class TestPostCouriers:
     # Если создать пользователя с логином, который уже есть, возвращается ошибка
     @allure.title('Проверка, что если создать пользователя с логином, который уже есть, вовращается ошибка')
     @allure.description('Создаем курьера с данными которые уже есть')
-    def test_create_dublicate_login_couriers(self):
-        couriers = CourierMethods()
-        couriers.post_couriers(urls.BASE_URL, urls.CREATE_COURIERS_URL, data.data_create_couriers)
+    def test_create_dublicate_login_couriers(self, couriers, generate_data_create_couriers):
+        couriers.post_couriers(urls.BASE_URL, urls.CREATE_COURIERS_URL, generate_data_create_couriers)
         status_code, response_text = couriers.post_couriers(
-            urls.BASE_URL, urls.CREATE_COURIERS_URL, data.data_create_couriers
+            urls.BASE_URL, urls.CREATE_COURIERS_URL, generate_data_create_couriers
         )
         assert status_code == 409 and response_text, (
             f"status_code = {status_code}, response_text = {response_text}"
